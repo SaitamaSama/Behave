@@ -9,8 +9,15 @@ namespace Netmosfera\Behave\Log;
  */
 class Interactions
 {
+    /**
+     * @TODOC
+     *
+     * @var         Interaction[]                                                           `Array<Int, Interaction>`
+     */
     public $interactions;
 
+    /**
+     */
     function __construct(){
         $this->interactions = [];
     }
