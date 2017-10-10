@@ -1,0 +1,28 @@
+{
+    "name": "netmosfera/behave",
+    "description": "",
+    "keywords": [],
+    "homepage": "https://github.com/Netmosfera/Behave",
+    "license": "MIT",
+    "authors": [{
+        "name": "Wes",
+        "homepage": "https://github.com/Netmosfera",
+        "role": "Smith"
+    }],
+    "require": {
+        "php": ">=7.2 <8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=6 <7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netmosfera\\Behave\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netmosfera\\BehaveTests\\": "tests/"
+        }
+    }
+}
