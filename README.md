@@ -35,18 +35,18 @@ use function Netmosfera\Behave\every;
 $obj1 = new class(){ /* irrelevant for the example */ };
 $obj2 = new class(){ /* irrelevant for the example */ };
 $obj3 = new class(){ /* irrelevant for the example */ };  
-$interactions[] = new GetInteraction($obj1, "var1", "return1", FALSE);
-$interactions[] = new GetInteraction($obj2, "var2", "return2", FALSE);
-$interactions[] = new GetInteraction($obj1, "var3", "return3", FALSE); // ✓
-$interactions[] = new GetInteraction($obj3, "var4", "return4", FALSE);
-$interactions[] = new GetInteraction($obj2, "var5", "return5", FALSE); // ✓
-$interactions[] = new GetInteraction($obj1, "var6", "return6", FALSE);
-$interactions[] = new GetInteraction($obj3, "var7", "return7", FALSE);
+$interactions[] = new GetInteraction($obj1, "var1", "return1", false);
+$interactions[] = new GetInteraction($obj2, "var2", "return2", false);
+$interactions[] = new GetInteraction($obj1, "var3", "return3", false); // ✓
+$interactions[] = new GetInteraction($obj3, "var4", "return4", false);
+$interactions[] = new GetInteraction($obj2, "var5", "return5", false); // ✓
+$interactions[] = new GetInteraction($obj1, "var6", "return6", false);
+$interactions[] = new GetInteraction($obj3, "var7", "return7", false);
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 // Verify that the program did `get()` `$obj1->var3`, and that it returned `any()` object.
-$constraint = get($obj1, "var3", any(), /* ignore these for now: */ FALSE, FALSE);
+$constraint = get($obj1, "var3", any(), /* ignore these for now: */ false, false);
 
 // Attempts to fulfill the constraint with the log of interactions:
 $result = $constraint->fulfill($interactions);
@@ -59,9 +59,9 @@ assert($result instanceof Result);
 // The constraint for the second interaction would look very similar to the first one, but
 // the interesting part is that we can combine them both in one expression only:
 $constraint = every([
-    get($obj1, "var3", any(), /* ignore these for now: */ FALSE, FALSE),
-    get($obj2, "var5", any(), /* ignore these for now: */ FALSE, FALSE),
-], /* ignore this for now: */ FALSE);
+    get($obj1, "var3", any(), /* ignore these for now: */ false, false),
+    get($obj2, "var5", any(), /* ignore these for now: */ false, false),
+], /* ignore this for now: */ false);
 
 $result = $constraint->fulfill($interactions);
 
