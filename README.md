@@ -46,28 +46,24 @@ $interactions[] = new GetInteraction($obj3, "var7", "return7", FALSE);
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 // Verify that the program did `get()` `$obj1->var3`, and that it returned `any()` object.
-$constraint = get(
-    $obj1, "var3", any(),
-    /* ignore these for now: */ FALSE, FALSE
-);
+$constraint = get($obj1, "var3", any(), /* ignore these for now: */ FALSE, FALSE);
 
 // Attempts to fulfill the constraint with the log of interactions:
 $result = $constraint->fulfill($interactions);
-// If the constraint is fulfilled, `fulfull()` returns a `Result` object.
+
+// If the constraint is fulfilled, `fulfill()` returns a `Result` object.
 assert($result instanceof Result);
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 // The constraint for the second interaction would look very similar to the first one, but
-// the interesting part is that we can combine them in one expression only:
-$constraint =
-    every(
-        [
-            get($obj1, "var3", any(), /* ignore these for now: */ FALSE, FALSE),
-            get($obj1, "var3", any(), /* ignore these for now: */ FALSE, FALSE),
-        ],
-        /* ignore this for now: */ FALSE
-    );
+// the interesting part is that we can combine them both in one expression only:
+$constraint = every([
+    get($obj1, "var3", any(), /* ignore these for now: */ FALSE, FALSE),
+    get($obj2, "var5", any(), /* ignore these for now: */ FALSE, FALSE),
+], /* ignore this for now: */ FALSE);
+
 $result = $constraint->fulfill($interactions);
+
 assert($result instanceof Result); 
 ```
