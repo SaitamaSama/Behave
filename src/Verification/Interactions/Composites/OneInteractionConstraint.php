@@ -1,6 +1,12 @@
 <?php declare(strict_types = 1); // atom
 
-namespace Netmosfera\Behave\Verification\Interactions;
+namespace Netmosfera\Behave\Verification\Interactions\Composites;
+
+//[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
+use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
+use Netmosfera\Behave\Verification\Interactions\Result;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
@@ -30,7 +36,7 @@ class OneInteractionConstraint implements InteractionConstraint
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
      * @TODOC
      */
-    function __construct(array $constraints, Bool $eatPreviousInteractions = FALSE){
+    function __construct(array $constraints, Bool $eatPreviousInteractions){
         $this->constraints = $constraints;
         $this->eatPreviousInteractions = $eatPreviousInteractions;
     }

@@ -1,6 +1,12 @@
 <?php declare(strict_types = 1); // atom
 
-namespace Netmosfera\Behave\Verification\Interactions;
+namespace Netmosfera\Behave\Verification\Interactions\Composites;
+
+//[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
+use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
+use Netmosfera\Behave\Verification\Interactions\Result;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 

@@ -1,11 +1,14 @@
 <?php declare(strict_types = 1); // atom
 
-namespace Netmosfera\Behave\Verification\Interactions;
+namespace Netmosfera\Behave\Verification\Interactions\Units;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 use Closure;
 use Netmosfera\Behave\Log\CallInteraction;
+use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
+use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
+use Netmosfera\Behave\Verification\Interactions\Result;
 use Netmosfera\Behave\Verification\Objects\ObjectConstraint;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -41,6 +44,13 @@ class CallInteractionConstraint implements InteractionConstraint
      *
      * @var         Bool                                                                    `Bool`
      */
+    private $resultIsThrown;
+
+    /**
+     * @TODOC
+     *
+     * @var         Bool                                                                    `Bool`
+     */
     private $eatPreviousInteractions;
 
     /**
@@ -50,7 +60,10 @@ class CallInteractionConstraint implements InteractionConstraint
      * @param       ObjectConstraint[]                      $argumentsConstraints           `Array<@TODO>`
      * @TODOC
      *
-     * @param       ObjectConstraint                        $returnConstraint               `ObjectConstraint`
+     * @param       ObjectConstraint                        $resultConstraint               `ObjectConstraint`
+     * @TODOC
+     *
+     * @param       Bool                                    $resultIsThrown                 `Bool`
      * @TODOC
      *
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
@@ -59,12 +72,14 @@ class CallInteractionConstraint implements InteractionConstraint
     function __construct(
         Closure $closure,
         Array $argumentsConstraints,
-        ObjectConstraint $returnConstraint,
-        Bool $eatPreviousInteractions = FALSE
+        ObjectConstraint $resultConstraint,
+        Bool $resultIsThrown,
+        Bool $eatPreviousInteractions
     ){
         $this->closure = $closure;
         $this->argumentsConstraints = $argumentsConstraints;
-        $this->returnConstraint = $returnConstraint;
+        $this->returnConstraint = $resultConstraint;
+        $this->resultIsThrown = $resultIsThrown;
         $this->eatPreviousInteractions = $eatPreviousInteractions;
     }
 
@@ -75,7 +90,7 @@ class CallInteractionConstraint implements InteractionConstraint
                 $interaction instanceof CallInteraction &&
                 $this->closure === $interaction->closure &&
                 $this->fulfillArguments($interaction->arguments) &&
-                $interaction->resultWasThrown === FALSE &&
+                $interaction->resultWasThrown === $this->resultIsThrown &&
                 $this->returnConstraint->isFulfilledBy($interaction->result)
             ){
                 $continueIndex = (count($interactions) - $index) * -1 + 1;

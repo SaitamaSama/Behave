@@ -1,10 +1,12 @@
 <?php declare(strict_types = 1); // atom
 
-namespace Netmosfera\Behave\Verification\Interactions;
+namespace Netmosfera\Behave\Verification\Interactions\Composites;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 use Error;
+use Netmosfera\Behave\Verification\Interactions\Result;
+use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
@@ -36,7 +38,7 @@ class EveryInteractionConstraint implements InteractionConstraint
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
      * @TODOC
      */
-    function __construct(array $constraints, Bool $eatPreviousInteractions = FALSE){
+    function __construct(array $constraints, Bool $eatPreviousInteractions){
         if(count($constraints) < 2){
             throw new Error("At least two constraints must be provided");
         }

@@ -18,7 +18,7 @@ class CannotFulfill extends Exception
      *
      * @var         InteractionConstraint                                                   `InteractionConstraint`
      */
-    private $what;
+    public $what;
 
     /**
      * @param       InteractionConstraint                   $what                           `InteractionConstraint`
@@ -27,15 +27,5 @@ class CannotFulfill extends Exception
     function __construct(InteractionConstraint $what){
         parent::__construct("Cannot fulfill the specified expectation", 0, NULL);
         $this->what = $what;
-    }
-
-    /**
-     * @TODOC
-     *
-     * @return      InteractionConstraint                                                   `InteractionConstraint`
-     * @TODOC
-     */
-    function getWhat(): InteractionConstraint{
-        return $this->what;
     }
 }

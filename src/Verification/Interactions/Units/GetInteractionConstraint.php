@@ -1,18 +1,21 @@
 <?php declare(strict_types = 1); // atom
 
-namespace Netmosfera\Behave\Verification\Interactions;
+namespace Netmosfera\Behave\Verification\Interactions\Units;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
-use Netmosfera\Behave\Log\SetInteraction;
+use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
+use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
 use Netmosfera\Behave\Verification\Objects\ObjectConstraint;
+use Netmosfera\Behave\Verification\Interactions\Result;
+use Netmosfera\Behave\Log\GetInteraction;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 /**
  * @TODOC
  */
-class SetInteractionConstraint implements InteractionConstraint
+class GetInteractionConstraint implements InteractionConstraint
 {
     /**
      * @TODOC
@@ -33,14 +36,14 @@ class SetInteractionConstraint implements InteractionConstraint
      *
      * @var         ObjectConstraint                                                        `ObjectConstraint`
      */
-    private $contentConstraint;
+    private $result;
 
     /**
      * @TODOC
      *
-     * @var         ObjectConstraint                                                        `ObjectConstraint`
+     * @var         Bool                                                                    `Bool`
      */
-    private $throwConstraint;
+    private $resultIsThrown;
 
     /**
      * @TODOC
@@ -56,10 +59,10 @@ class SetInteractionConstraint implements InteractionConstraint
      * @param       String                                  $member                         `String`
      * @TODOC
      *
-     * @param       ObjectConstraint                        $contentConstraint              `ObjectConstraint`
+     * @param       ObjectConstraint                        $resultConstraint               `ObjectConstraint`
      * @TODOC
      *
-     * @param       ObjectConstraint                        $throwConstraint                `ObjectConstraint`
+     * @param       Bool                                    $resultIsThrown                 `Bool`
      * @TODOC
      *
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
@@ -68,14 +71,14 @@ class SetInteractionConstraint implements InteractionConstraint
     function __construct(
         $object,
         String $member,
-        ObjectConstraint $contentConstraint,
-        ObjectConstraint $throwConstraint,
-        Bool $eatPreviousInteractions = FALSE
+        ObjectConstraint $resultConstraint,
+        Bool $resultIsThrown,
+        Bool $eatPreviousInteractions
     ){
         $this->object = $object;
         $this->member = $member;
-        $this->contentConstraint = $contentConstraint;
-        $this->throwConstraint = $throwConstraint;
+        $this->result = $resultConstraint;
+        $this->resultIsThrown = $resultIsThrown;
         $this->eatPreviousInteractions = $eatPreviousInteractions;
     }
 
@@ -83,11 +86,11 @@ class SetInteractionConstraint implements InteractionConstraint
     function fulfill(Array $interactions): Result{
         foreach($interactions as $index => $interaction){
             if(
-                $interaction instanceof SetInteraction &&
+                $interaction instanceof GetInteraction &&
                 $this->object === $interaction->object &&
                 $this->member === $interaction->member &&
-                $this->contentConstraint->isFulfilledBy($interaction->content) &&
-                $this->throwConstraint->isFulfilledBy($interaction->throw)
+                $interaction->resultWasThrown === $this->resultIsThrown &&
+                $this->result->isFulfilledBy($interaction->result)
             ){
                 $continueIndex = (count($interactions) - $index) * -1 + 1;
                 if($this->eatPreviousInteractions){
